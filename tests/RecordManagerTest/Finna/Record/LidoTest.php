@@ -735,9 +735,9 @@ class LidoTest extends \RecordManagerTest\Base\Record\RecordTestBase
             $fields['hierarchy_parent_title']
         );
         $this->assertEquals('testi-000000418', $fields['hierarchy_sequence']);
-        $this->assertEquals('testi-418 Testi joka puuttui', $fields['title_in_hierarchy']);
-        $this->assertEquals('testi-418 Testi joka puuttui', $fields['title_in_hierarchy_fi_str']);
-        $this->assertEquals('testi-418 The test that was missing', $fields['title_in_hierarchy_en_str']);
+        $this->assertEquals(['testi-418 Testi joka puuttui'], $fields['title_in_hierarchy']);
+        $this->assertEquals(['testi-418 Testi joka puuttui'], $fields['title_in_hierarchy_fi_str_mv']);
+        $this->assertEquals(['testi-418 The test that was missing'], $fields['title_in_hierarchy_en_str_mv']);
         $this->assertContains('Yksikkötestikokoelma; Kaikki testit kautta aikojen', $fields['allfields']);
         $this->assertContains('Puuttuvien testien kokoelma', $fields['allfields']);
         $this->assertContains('testi-418 Testi joka puuttui', $fields['allfields']);

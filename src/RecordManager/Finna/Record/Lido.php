@@ -172,8 +172,8 @@ class Lido extends \RecordManager\Base\Record\Lido
      */
     protected $hierarchyFieldsInAllFields = [
         'is_hierarchy_title', 'hierarchy_parent_title', 'hierarchy_top_title', 'title_in_hierarchy',
-        'title_in_hierarchy_en_str_', 'title_in_hierarchy_fi_str', 'title_in_hierarchy_se_str',
-        'title_in_hierarchy_sv_str',
+        'title_in_hierarchy_en_str_mv', 'title_in_hierarchy_fi_str_mv', 'title_in_hierarchy_se_str_mv',
+        'title_in_hierarchy_sv_str_mv',
     ];
 
     /**
@@ -2280,10 +2280,12 @@ class Lido extends \RecordManager\Base\Record\Lido
     {
         // Note: title_in_hierarchy is only needed if it differs from title.
         if ($this->getDriverParam('addIdToHierarchyTitle', true)) {
-            $data['title_in_hierarchy'] = trim($this->getIdentifier() . ' ' . $data['title']);
+            $data['title_in_hierarchy'] = [trim($this->getIdentifier() . ' ' . $data['title'])];
             foreach (['fi', 'sv', 'en', 'se'] as $language) {
                 if ('' !== ($langTitle = $data['title_' . $language . '_txt'] ?? '')) {
-                    $data['title_in_hierarchy_' . $language . '_str'] = trim($this->getIdentifier() . ' ' . $langTitle);
+                    $data['title_in_hierarchy_' . $language . '_str_mv'] = [
+                        trim($this->getIdentifier() . ' ' . $langTitle),
+                    ];
                 }
             }
         }

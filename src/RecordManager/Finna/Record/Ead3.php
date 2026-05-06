@@ -457,10 +457,10 @@ class Ead3 extends \RecordManager\Base\Record\Ead3
     {
         // Note: title_in_hierarchy is only needed if it differs from title.
         if ($this->getDriverParam('addIdToHierarchyTitle', true)) {
-            $data['title_in_hierarchy'] = trim("$sequenceUnitId " . $data['title']);
+            $data['title_in_hierarchy'] = [trim("$sequenceUnitId " . $data['title'])];
             foreach (['fi', 'sv', 'en', 'se'] as $language) {
                 if ('' !== ($langTitle = $data['title_' . $language . '_txt'] ?? '')) {
-                    $data['title_in_hierarchy_' . $language . '_str'] = trim("$sequenceUnitId " . $langTitle);
+                    $data['title_in_hierarchy_' . $language . '_str_mv'] = [trim("$sequenceUnitId " . $langTitle)];
                 }
             }
         }

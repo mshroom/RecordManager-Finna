@@ -569,9 +569,9 @@ class Ead3Test extends \RecordManagerTest\Base\Record\RecordTestBase
             'addIdToHierarchyTitle=true' => [
                 'true',
                 [
-                    'no_lang' => '1 1 Sundvall Gustaf Edvard S 1:a) 1',
-                    'fi' => '1 1 Sundvall Gustaf Edvard S 1:a) 1',
-                    'sv' => '1 1 Sundvall Gustaf Edvard S 1:a) 1 swe',
+                    'no_lang' => ['1 1 Sundvall Gustaf Edvard S 1:a) 1'],
+                    'fi' => ['1 1 Sundvall Gustaf Edvard S 1:a) 1'],
+                    'sv' => ['1 1 Sundvall Gustaf Edvard S 1:a) 1 swe'],
                 ],
             ],
             'addIdToHierarchyTitle=false' => [
@@ -867,8 +867,8 @@ class Ead3Test extends \RecordManagerTest\Base\Record\RecordTestBase
         ];
         if (null !== $expectedTitleInHierarchy) {
             $expected['title_in_hierarchy'] = $expectedTitleInHierarchy['no_lang'];
-            $expected['title_in_hierarchy_fi_str'] = $expectedTitleInHierarchy['fi'];
-            $expected['title_in_hierarchy_sv_str'] = $expectedTitleInHierarchy['sv'];
+            $expected['title_in_hierarchy_fi_str_mv'] = $expectedTitleInHierarchy['fi'];
+            $expected['title_in_hierarchy_sv_str_mv'] = $expectedTitleInHierarchy['sv'];
         }
 
         $this->assertEquals(
