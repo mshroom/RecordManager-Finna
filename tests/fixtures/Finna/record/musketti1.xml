@@ -117,12 +117,15 @@
                                 <term label="Museoalan asiasanasto">taloustarvikkeet </term>
                             </subjectConcept>
                             <subjectConcept>
+                                <conceptID type="http://terminology.lido-schema.org/lido00099" source="yso">http://www.yso.fi/onto/yso/p4847</conceptID>
                                 <term label="Yleinen suomalainen asiasanasto"> nautintoaineet</term>
                             </subjectConcept>
                             <subjectConcept>
+                                <Concept about="http://www.yso.fi/onto/yso/p4277"/>
                                 <term label="Yleinen suomalainen asiasanasto">kahvi <!-- test --></term>
                             </subjectConcept>
                             <subjectConcept>
+                                <conceptID type="notsupported">0000</conceptID>
                                 <term label="Museoalan asiasanasto">suomalais-ugrilaiset kansat</term>
                             </subjectConcept>
                             <subjectConcept>
@@ -199,6 +202,13 @@
                             <legalBodyWeblink>www.NBA.fi</legalBodyWeblink>
                         </rightsHolder>
                         <creditLine />
+                    </rightsResource>
+                </resourceSet>
+                <resourceSet>
+                    <rightsResource>
+                        <rightsType>
+                            <Concept about="https://rightsstatements.org/vocab/InC/1.0/"/>
+                        </rightsType>
                     </rightsResource>
                 </resourceSet>
             </resourceWrap>

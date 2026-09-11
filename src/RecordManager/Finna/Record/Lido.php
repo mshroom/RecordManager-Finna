@@ -119,7 +119,7 @@ class Lido extends \RecordManager\Base\Record\Lido
      *
      * @var array
      */
-    protected $relatedISBNRelationTypes = ['is reproduced in', 'julkaisu'];
+    protected $relatedISBNRelationTypes = ['is reproduced in', 'on toisinnettu', 'julkaisu'];
 
     /**
      * Description types to exclude from title
@@ -127,6 +127,13 @@ class Lido extends \RecordManager\Base\Record\Lido
      * @var array
      */
     protected $descriptionTypesExcludedFromTitle = ['provenance', 'provenienssi'];
+
+    /**
+     * Subject conceptID types included in topic identifiers (all lowercase).
+     *
+     * @var array
+     */
+    protected $subjectConceptIDTypes = ['uri', 'url', 'http://terminology.lido-schema.org/lido00099'];
 
     /**
      * Title types for preferred titles.
@@ -996,10 +1003,8 @@ class Lido extends \RecordManager\Base\Record\Lido
         $result = [];
         $path = 'lido/administrativeMetadata/resourceWrap/resourceSet';
         foreach ($this->xmlDoc->all(path: $path) as $set) {
-            if (null !== ($value = $this->xmlDoc->firstValue($set, 'rightsResource/rightsType/conceptID'))) {
-                $result[] = $value;
-            } else {
-                $result[] = 'restricted';
+            foreach ($this->xmlDoc->all($set, path: 'rightsResource/rightsType') as $rightsType) {
+                $result[] = ('' !== $value = $this->getFirstConceptIdentifier($rightsType)) ? $value : 'restricted';
             }
         }
         return $result;
@@ -2112,8 +2117,7 @@ class Lido extends \RecordManager\Base\Record\Lido
     }
 
     /**
-     * Return the object measurements. Only the display element is used currently
-     * until processing more granular data is needed.
+     * Return the object measurements.
      *
      * @link   http://www.lido-schema.org/schema/v1.0/lido-v1.0-schema-listing.html
      * #objectMeasurementsSetComplexType
@@ -2125,17 +2129,24 @@ class Lido extends \RecordManager\Base\Record\Lido
         $path = 'lido/descriptiveMetadata/objectIdentificationWrap/objectMeasurementsWrap/objectMeasurementsSet';
         foreach ($this->xmlDoc->all(path: $path) as $set) {
             $setResults = $this->xmlDoc->allValues($set, 'displayObjectMeasurements');
-            // Use measurementsSet if there's no displayMeasurements:
+            // Use measurementsSet if there's no displayMeasurements.
+            // Support both simple text and term element in measurementType and measurementUnit.
             if (!$setResults) {
                 foreach ($this->xmlDoc->all($set, 'objectMeasurements/measurementsSet') as $measurements) {
                     $parts = [];
-                    if ('' !== ($type = $this->xmlDoc->firstValue($measurements, 'measurementType') ?? '')) {
+                    $type = $this->xmlDoc->firstValue($measurements, 'measurementType/term')
+                        ?? $this->xmlDoc->firstValue($measurements, 'measurementType')
+                        ?? '';
+                    if ('' !== $type) {
                         $parts[] = $type;
                     }
                     if ('' !== ($val = $this->xmlDoc->firstValue($measurements, 'measurementValue') ?? '')) {
                         $parts[] = $val;
                     }
-                    if ('' !== ($unit = $this->xmlDoc->firstValue($measurements, 'measurementUnit') ?? '')) {
+                    $unit = $this->xmlDoc->firstValue($measurements, 'measurementUnit/term')
+                        ?? $this->xmlDoc->firstValue($measurements, 'measurementUnit')
+                        ?? '';
+                    if ('' !== $unit) {
                         $parts[] = $unit;
                     }
                     if ($parts) {

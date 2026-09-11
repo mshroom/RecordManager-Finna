@@ -85,6 +85,8 @@ class LidoTest extends \RecordManagerTest\Base\Record\RecordTestBase
         $this->assertContains('pannut', $fields['topic']);
         $this->assertContains('kahvipannut', $fields['topic']);
         $this->assertContains('Toimija, Toini', $fields['topic']);
+        $this->assertContains('http://www.yso.fi/onto/yso/p4847', $fields['topic_id_str_mv']);
+        $this->assertContains('http://www.yso.fi/onto/yso/p4277', $fields['topic_id_str_mv']);
 
         $this->assertEquals('kahvipannu', $fields['title']);
 
@@ -120,6 +122,8 @@ class LidoTest extends \RecordManagerTest\Base\Record\RecordTestBase
         $this->assertContains('teollinen tuote', $fields['allfields']);
         $this->assertContains('Museovirasto/MV', $fields['allfields']);
         $this->assertEquals(['image/jpeg'], $fields['media_type_str_mv']);
+        $this->assertContains('Undefined rights', $fields['usage_rights_str_mv']);
+        $this->assertContains('https://rightsstatements.org/vocab/InC/1.0/', $fields['usage_rights_str_mv']);
     }
 
     /**
@@ -317,10 +321,10 @@ class LidoTest extends \RecordManagerTest\Base\Record\RecordTestBase
             'free_online_str_mv' => '__unit_test_no_source__',
             'location_geo' => [],
             'usage_rights_str_mv' => [
-                '',
+                'restricted',
             ],
             'usage_rights_ext_str_mv' => [
-                '',
+                'restricted',
             ],
             'author_facet' => [
                 'Testaaja, Taavi',
